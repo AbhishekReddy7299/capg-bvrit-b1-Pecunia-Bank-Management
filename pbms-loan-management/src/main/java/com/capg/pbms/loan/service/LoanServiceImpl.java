@@ -68,7 +68,8 @@ public class LoanServiceImpl implements ILoanService {
 		if(str.matches("[0-9]{12}")) {
 		return true;	
 		}
-		return false;
+		
+	throw new AccountException("Invalid Account Id");	 
 	}
  
 }

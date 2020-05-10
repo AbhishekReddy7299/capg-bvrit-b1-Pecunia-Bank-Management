@@ -1,6 +1,7 @@
 package com.capg.pbms.transactionms.controller;
 
- import java.util.List;
+ import java.time.LocalDate;
+import java.util.List;
   
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.capg.pbms.transactionms.model.Customer;
 import com.capg.pbms.transactionms.model.Transaction;
 import com.capg.pbms.transactionms.service.TransactionService;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 @CrossOrigin(origins = "http://localhost:4200") 
 @RestController
@@ -72,6 +74,7 @@ public class TransactionController {
  	
  	
 	@PostMapping("/creditcheque/id/{id}/amount/{amount}")
+	@HystrixCommand(fallbackMethod="creditUsingChequeFallback")
 	public Transaction creditUsingCheque(@PathVariable("id") long accountId ,@PathVariable("amount") double amount,@RequestBody Transaction transaction) {
  	  	  return transactionservice.creditUsingCheque(accountId, amount, transaction);
  	}
@@ -92,5 +95,10 @@ public class TransactionController {
 	 public Transaction debitUsingSlip(@PathVariable("id") long accountId,@PathVariable("amount") double amount,@RequestBody Transaction transaction ) {
  		  return transactionservice.debitUsingSlip(accountId, amount, transaction);
 	}
-	 
+
+	public Transaction creditUsingChequeFallback(@PathVariable("id") long accountId ,@PathVariable("amount") double amount,@RequestBody Transaction transaction) {
+		
+			Transaction t=new Transaction(accountId,123456789012L,amount, "cheque",LocalDate.now(), 123456, 20000.00, null);
+			return t;
+		}
 }

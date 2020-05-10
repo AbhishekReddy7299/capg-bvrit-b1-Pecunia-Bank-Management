@@ -1,31 +1,31 @@
-package com.capg.pbms.passbook.model;
+ package com.capg.pbms.passbook.model;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Pattern;
-
+ 
 import org.springframework.format.annotation.DateTimeFormat;
+ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name="transaction_info")
 public class Transaction {
 	
 	@Id
-	 
-//	@Pattern(regexp="[0-9]{12}")
-	private long transAccountId;
-	private int transaction_id;
+	private long transAccountId; 
+	private long transaction_id;
 	private double transAmount;
 	private String transOption;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private LocalDate transDate;
-	//@Pattern(regexp="[0-9]{6}")
-	private long transChequeId;
+ 	private long transChequeId;
 	private double transClosingBalance;
 
 	@OneToMany(cascade = CascadeType.ALL,mappedBy="transaction")
@@ -47,12 +47,12 @@ public class Transaction {
 	}
 
 
-	public int getTransaction_id() {
+	public long getTransaction_id() {
 		return transaction_id;
 	}
 
 
-	public void setTransaction_id(int transaction_id) {
+	public void setTransaction_id(long transaction_id) {
 		this.transaction_id = transaction_id;
 	}
 
@@ -117,9 +117,8 @@ public class Transaction {
 	}
 
 
-	public Transaction( long transAccountId, int transaction_id, double transAmount,
-			String transOption, LocalDate transDate, long transChequeId,
-			double transClosingBalance, List<Cheque> chequeList) {
+	public Transaction(long transAccountId, long transaction_id, double transAmount, String transOption,
+			LocalDate transDate, long transChequeId, double transClosingBalance, List<Cheque> chequeList) {
 		super();
 		this.transAccountId = transAccountId;
 		this.transaction_id = transaction_id;
@@ -140,5 +139,5 @@ public class Transaction {
 	}
 
 
-	 
-}
+	 	
+ 	  }

@@ -245,6 +245,17 @@ public class AccountManagementServiceImpl implements IAccountManagementService {
 // 		}
 // 		return false;
 // 	}
+
+	public boolean isValidAccountId(long accountId) {
+		String str=String.valueOf(accountId);
+		if(str.matches("[0-9]{12}")) {
+			 
+			return true;	
+		}
+		throw new AccountNotFoundException("Account No should be in 12 digits");
+		//return false;
+	}
+
  	public boolean isValidZipcode(String addressZipcode) {
  		if(addressZipcode.matches("[0-9]{6}")) {
  			return true;

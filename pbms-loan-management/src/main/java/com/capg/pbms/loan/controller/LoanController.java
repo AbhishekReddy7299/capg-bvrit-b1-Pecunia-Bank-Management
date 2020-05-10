@@ -17,6 +17,7 @@ import com.capg.pbms.loan.model.Account;
 import com.capg.pbms.loan.model.Customer;
 import com.capg.pbms.loan.model.LoanRequest;
 import com.capg.pbms.loan.service.ILoanService;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
  
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -31,21 +32,14 @@ public class LoanController {
 	}
 
 	@PostMapping("/assign/loan/id/{id}/{creditscore}/{amount}")
+	@HystrixCommand(fallbackMethod="addLoanFallBack")
 	public LoanRequest addLoan(@PathVariable("id") long accountId,@PathVariable("creditscore") int creditScore,@PathVariable("amount") double loanAmount,@RequestBody LoanRequest loanrequest)
 	{
-		 
-		 return service.addLoan(accountId, creditScore, loanAmount, loanrequest);
-	 	
-		
+		 return service.addLoan(accountId, creditScore, loanAmount, loanrequest);		
 	}
-//	@GetMapping("/assign/loan/id/{id}")
-//	public LoanRequest getLoanById(@PathVariable("id") long accountId) {
-//		return service.getLoanById(accountId);
-//	}
-//	@PutMapping("/creditLoan/{id}/{amount}")
-//	public LoanRequest creditLoan(@PathVariable("id") long accountId,@PathVariable("amount") double amount) {
-//		LoanRequest loanrequest=service.addLoan(accountId, 0, amount, null);
-//		loanrequest.getLoanAmount().add()
-//	}
-
-}
+	public LoanRequest addLoanFallback(@PathVariable("id") long accountId,@PathVariable("creditscore") int creditScore,@PathVariable("amount") double loanAmount,@RequestBody LoanRequest loanrequest)
+	{
+		LoanRequest l=new LoanRequest( accountId,loanAmount, "house loan", 3, 300.00, "Accepted", 500.00, creditScore);
+		return l;
+	}
+ }

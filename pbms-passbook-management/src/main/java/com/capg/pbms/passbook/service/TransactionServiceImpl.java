@@ -53,7 +53,17 @@ public class TransactionServiceImpl implements ITransactionService{
 	}
  
 	
-	 
+
+	public boolean isValidAccountId(long accountId) {
+		String str=String.valueOf(accountId);
+		if(str.matches("[0-9]{12}")) {
+			 
+			return true;	
+		}
+		throw new AccountException("Account No should be in 12 digits");
+		//return false;
+	}
+ 	 
 	
 	 
 }

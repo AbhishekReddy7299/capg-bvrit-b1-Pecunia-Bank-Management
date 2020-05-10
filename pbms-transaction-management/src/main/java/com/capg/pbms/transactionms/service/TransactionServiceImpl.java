@@ -317,5 +317,13 @@ public class TransactionServiceImpl implements  TransactionService {
 
 	}
  
- 	
+
+	public boolean isValidAccountId(long accountId) {
+		String str=String.valueOf(accountId);
+		if(str.matches("[0-9]{12}")) {
+		return true;	
+		}
+		return false;
+	}
+ 
 }

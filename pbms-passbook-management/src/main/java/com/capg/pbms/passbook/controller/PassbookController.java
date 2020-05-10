@@ -1,5 +1,6 @@
 package com.capg.pbms.passbook.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import com.capg.pbms.passbook.model.Transaction;
 import com.capg.pbms.passbook.model.TransactionList;
 import com.capg.pbms.passbook.service.ITransactionService;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -28,7 +30,8 @@ public class PassbookController {
 	
 	}
 
-	@GetMapping("/lastTransactionById/id/{id}") 
+	@GetMapping("/lastTransactionById/id/{id}")
+	@HystrixCommand(fallbackMethod="getTransactionByIdFallback")
 	public Transaction getTransactionById(@PathVariable("id") long accountId) {
 		return transactionService.getTransactionById(accountId);
 	}
@@ -38,6 +41,9 @@ public class PassbookController {
 		 
 		return transactionService.getAllTransactions();
 	}
-
+	public Transaction getTransactionByIdFallback(@PathVariable("id") long accountId) {
+		Transaction t=new Transaction(accountId,123456789012L,1000.00, "cheque",LocalDate.now(),123456, 20000.00, null);
+		return t;
+	}
 	
 }

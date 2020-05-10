@@ -107,8 +107,8 @@ public class AccountRepoController {
 		
 	
 	public  Customer getAccountFallback(@PathVariable("accountId") long accountId) {
-		Customer customer=new Customer(accountId, "123456789012", null, null, null, 0, 0, null, null, null, null, null, null, null, null, null);
-		
+		Customer customer=new Customer(accountId,"123456", "1", "savings", "Active", 2000.00, 3.00,null, "`123456789012", "asdfg", "1234567890", "wer3456", "1234567890", "MALE", 	null, null);
+
 		return customer;
 	}
 }

@@ -18,6 +18,12 @@
 		<java.version>1.8</java.version>
 	</properties>
 	<dependencies>
+	<dependency>
+	<groupId>org.sonarsource.scanner.maven</groupId>
+  		<artifactId>sonar-maven-plugin</artifactId>
+    	<version>3.6.0.1398</version>
+</dependency>
+	
 	<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-eureka-client -->
 <dependency>
     <groupId>org.springframework.cloud</groupId>

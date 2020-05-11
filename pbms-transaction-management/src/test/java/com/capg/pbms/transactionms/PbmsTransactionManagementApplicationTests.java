@@ -15,10 +15,10 @@ class PbmsTransactionManagementApplicationTests {
  		public void testAccountId() {
  			assertEquals(true, Service.isValidAccountId(123456789012L));
  		} 
- 		@Test
- 		public void getBalanceById() {
- 			assertEquals(8000.0,Service.getBalanceById(123456789012L));
- 		}
+// 		@Test
+// 		public void getBalanceById() {
+// 			assertEquals(8000.0,Service.getBalanceById(123456789012L));
+// 		}
 
  		
  		@Test
